@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ITodo, TodoService } from 'src/app/services/todo.service';
 
 @Component({
   selector: 'app-todo',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoComponent implements OnInit {
 
-  constructor() { }
+  public todos: ITodo[] = [];
+
+  constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
+    this.getTodos();
+  }
+
+  getTodos(): void {
+    const sub: Subscription = this.todoService.getTodo().subscribe(
+      todoResult => {
+        console.log(todoResult);
+        this.todos = todoResult;
+      },
+      err => {
+        console.log(err);
+      },
+      () => {
+        sub.unsubscribe();
+      }
+    );
   }
 
 }

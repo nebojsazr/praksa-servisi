@@ -1,8 +1,26 @@
 <header>
     <div class="user">
-        
+        <ng-container *ngIf='authService.isLoggedIn'>
+            Welcome {{ authService.user.firstName }} {{ authService.user.lastName }}
+        </ng-container>
+        <ng-container *ngIf='!authService.isLoggedIn'>
+            <button (click)="login()">Log In</button>
+        </ng-container>
     </div>
     <div class="membership">
         
+    </div>
+    <div class="menu">
+        <ul>
+            <li>
+                <a [routerLink]="['home']">Home</a>
+            </li>
+            <li>
+                <a [routerLink]="['todo']">To do list</a>
+            </li>
+            <li>
+                <a [routerLink]="['user']">User account</a>
+            </li>
+        </ul>
     </div>
 </header>
