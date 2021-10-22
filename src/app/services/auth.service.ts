@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 export interface IUser {
     firstName: string;
@@ -12,17 +13,23 @@ export interface IUser {
 export class AuthService {
     isLoggedIn = false;
 
-    // tslint:disable-next-line:variable-name
-    private _user: IUser = {
+    public user$: BehaviorSubject<IUser> = new BehaviorSubject<IUser>({
         firstName: '',
         lastName: '',
         isMember: false
-    };
+    });
 
-    public get user(): IUser {
-        return this._user;
+    login(userD: IUser): void {
+        this.isLoggedIn = true;
+        this.user$.next(userD);
     }
-    public set user(value: IUser) {
-        this._user = value;
+
+    logout(): void {
+        this.isLoggedIn = false;
+        this.user$.next({
+            firstName: '',
+            lastName: '',
+            isMember: false
+        });
     }
 }

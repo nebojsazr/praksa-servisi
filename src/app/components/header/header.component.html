@@ -1,9 +1,10 @@
 <header>
     <div class="user">
-        <ng-container *ngIf='authService.isLoggedIn'>
-            Welcome {{ authService.user.firstName }} {{ authService.user.lastName }}
+        <ng-container *ngIf="isLoggedIn">
+            Welcome {{ user.firstName }} {{ user.lastName }}
+            <button (click)="logout()">Log Out</button>
         </ng-container>
-        <ng-container *ngIf='!authService.isLoggedIn'>
+        <ng-container *ngIf='!isLoggedIn'>
             <button (click)="login()">Log In</button>
         </ng-container>
     </div>

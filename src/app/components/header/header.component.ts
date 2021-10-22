@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, IUser } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,20 +9,37 @@ import { AuthService } from 'src/app/services/auth.service';
 export class HeaderComponent implements OnInit {
 
   constructor(
-    public authService: AuthService
+    private authService: AuthService
   ) { }
 
+  user: IUser = {
+    firstName: '',
+    lastName: '',
+    isMember: false
+  };
+
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn;
+  }
+
   ngOnInit(): void {
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+    });
   }
 
   login(): void {
-    this.authService.isLoggedIn = true;
+    this.authService.login(
+      {
+        firstName: 'Stojan',
+        lastName: 'Savic',
+        isMember: false
+      }
+    );
+  }
 
-    this.authService.user = {
-      firstName: 'Nebojsa',
-      lastName: 'Marinkov',
-      isMember: false
-    };
+  logout(): void {
+    this.authService.logout();
   }
 
 }

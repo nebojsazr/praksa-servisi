@@ -17,13 +17,13 @@ export class UserComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn) {
-      this.userData = this.authService.user;
-    }
+    this.authService.user$.subscribe(usr => {
+      this.userData = { ...usr };
+    });
   }
 
   save(): void {
-    this.authService.user = this.userData;
+    this.authService.user$.next(this.userData);
   }
 
 }

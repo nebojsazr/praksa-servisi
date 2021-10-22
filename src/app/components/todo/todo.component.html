@@ -1,1 +1,19 @@
-<p>todo works!</p>
+<table *ngIf = "todos && todos.length; else noData">
+<tr class="todo" *ngFor="let item of todos">
+    <td>
+        {{ item.title }}
+    </td>
+    <td>
+        {{ item.desc }}
+    </td>
+    <td>
+        {{ item.date }}
+    </td>
+</tr>
+</table>
+
+<ng-template #noData>
+    <div style="color: red;font-size: large;">
+        no  Dataaa !!!!!!!
+     </div>
+</ng-template>
